@@ -1,0 +1,5 @@
+psycopg~=3.3
+psycopg_pool~=3.3
+msgspec
+classic-db-tools
+sqlalchemy

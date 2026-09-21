@@ -1,0 +1,13 @@
+pyproject.toml
+src/bench/__main__.py
+src/bench/dataclasses_dbtools.py
+src/bench/msgspec_db_json.py
+src/bench/msgspec_db_json_array.py
+src/bench/msgspec_db_json_lateral.py
+src/bench/msgspec_dbtools.py
+src/bench/utils.py
+src/bench.egg-info/PKG-INFO
+src/bench.egg-info/SOURCES.txt
+src/bench.egg-info/dependency_links.txt
+src/bench.egg-info/requires.txt
+src/bench.egg-info/top_level.txt

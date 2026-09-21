@@ -1,0 +1,14 @@
+Metadata-Version: 2.4
+Name: bench
+Version: 0.1
+Summary: bench for db rows parsing
+Author-email: Sergei Variasov <variasov@gmail.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/variasov/db-parsing-benchmarks
+Requires-Python: >=3.14
+Description-Content-Type: text/markdown
+Requires-Dist: psycopg~=3.3
+Requires-Dist: psycopg_pool~=3.3
+Requires-Dist: msgspec
+Requires-Dist: classic-db-tools
+Requires-Dist: sqlalchemy
