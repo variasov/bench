@@ -27,28 +27,19 @@ WITH orders AS (
     FROM "Order" o
 ),
 lines AS (
-    SELECT l.orderid, l.id, l.productid, l.quantity
+    SELECT l.orderid,
+           json_agg(json_build_array(
+               l.id, l.productid, l.quantity
+           ) ORDER BY l.id) AS arr
     FROM orderlines l
+    GROUP BY l.orderid
 )
 SELECT json_agg(
-    json_build_object(
-        'id', o.id,
-        'field_a', o.fielda,
-        'field_b', o.fieldb,
-        'lines', coalesce(
-            (SELECT json_agg(json_build_object(
-                'id', l.id,
-                'product_id', l.productid,
-                'quantity', l.quantity
-            ) ORDER BY l.id)
-            FROM lines l
-            WHERE l.orderid = o.id),
-            '[]'
-        )
-    )
+    json_build_array(o.id, o.fielda, o.fieldb, coalesce(l.arr, '[]'))
     ORDER BY o.id
 )::text
 FROM orders o
+LEFT JOIN lines l ON l.orderid = o.id
 '''
 
 
@@ -56,13 +47,19 @@ def run(iterations: int = 100) -> float:
     load_dotenv()
     engine = Engine(psycopg)
     query = engine.query(QUERY, static=True)
-    adapter = TypeAdapter(list[Order])
+    adapter = TypeAdapter(list[tuple[UUID, int, int, list]])
 
-    adapter.validate_json(query.scalar())
+    def parse(text: str) -> list[Order]:
+        return [
+            Order(id=row[0], field_a=row[1], field_b=row[2], lines=row[3])
+            for row in adapter.validate_json(text)
+        ]
+
+    parse(query.scalar())
 
     start = time.perf_counter()
     for _ in range(iterations):
-        adapter.validate_json(query.scalar())
+        parse(query.scalar())
     elapsed = time.perf_counter() - start
 
     return elapsed
