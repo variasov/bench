@@ -19,6 +19,7 @@ dependencies = [
     "psycopg~=3.3",
     "psycopg_pool~=3.3",
     "msgspec",
+    "pydantic",
     "classic-db-tools",
     "sqlalchemy"
 ]

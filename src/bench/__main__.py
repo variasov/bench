@@ -8,6 +8,7 @@ from . import (
     msgspec_db_json_array_nosort,
     msgspec_db_json_lateral,
     msgspec_dbtools,
+    pydantic_db_json,
     sqlalchemy_orm,
     sqlalchemy_orm_join,
 )
@@ -22,6 +23,7 @@ BENCHES = (
     ('msgspec + json (array, fast text)', msgspec_db_json_array_fast_text.run),
     ('msgspec + json (array, nosort)', msgspec_db_json_array_nosort.run),
     ('msgspec + json (lateral)', msgspec_db_json_lateral.run),
+    ('pydantic + json (object)', pydantic_db_json.run),
     ('sqlalchemy ORM', sqlalchemy_orm.run),
     ('sqlalchemy ORM (join)', sqlalchemy_orm_join.run),
 )
